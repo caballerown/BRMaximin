@@ -1,0 +1,931 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>StahlandWilsonGames_CheckCH</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-03"><meta name="DC.source" content="StahlandWilsonGames_CheckCH.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%%Stahl and Wilson Games - CH Exp Payoff M-Step Thinker Graphs</span>
+<span class="comment">% The following code runs the CH model with the estimates provided by</span>
+<span class="comment">% Camerer (2004) in Table III on all 12 of the Stahl and Wilson games. The</span>
+<span class="comment">% emprical results for the Stahl and Wilson games are also provided for</span>
+<span class="comment">% comparitive purposes.</span>
+
+<span class="comment">% Action Key: T=1; M=2; B=3</span>
+
+<span class="comment">%%Player 1 is Row Player, Player 2 is Column Player</span>
+
+<span class="comment">%Game 1</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)=25;
+payoffarray(1,1,2)=30;
+payoffarray(1,1,3)=100;
+payoffarray(1,2,1)= 40;
+payoffarray(1,2,2)=45;
+payoffarray(1,2,3)=65;
+payoffarray(1,3,1)=31;
+payoffarray(1,3,2)=0;
+payoffarray(1,3,3)=40;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (7/48,40/48,1/48)</span>
+CamererPred{1} = CogHierSol(payoffarray, 2.93, 50);
+SWresults{1} = [7/48,40/48,1/48];
+disp(<span class="string">'CH Solution Game 1'</span>)
+celldisp(CamererPred{1}(1))
+disp(<span class="string">'CH Solution Game 2'</span>)
+SWresults{1}
+</pre><pre class="codeoutput">CH Solution Game 1
+ 
+ans{1} =
+ 
+    0.1743    0.8079    0.0178
+
+ 
+CH Solution Game 2
+
+ans =
+
+    0.1458    0.8333    0.0208
+
+</pre><pre class="codeinput"><span class="comment">%Game 2</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 75;
+payoffarray(1,1,2)=40;
+payoffarray(1,1,3)=45;
+payoffarray(1,2,1)=70;
+payoffarray(1,2,2)=15;
+payoffarray(1,2,3)=100;
+payoffarray(1,3,1)=70;
+payoffarray(1,3,2)=60;
+payoffarray(1,3,3)=0;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (30/48,12/48,6/48)</span>
+CamererPred{2} = CogHierSol(payoffarray, 0, 50);
+SWresults{2} = [30/48,12/48,6/48];
+disp(<span class="string">'CH Solution Game 2'</span>)
+celldisp(CamererPred{2}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 2'</span>)
+SWresults{2}
+</pre><pre class="codeoutput">CH Solution Game 2
+ 
+ans{1} =
+ 
+    0.3333    0.3333    0.3333
+
+ 
+Stahl &amp; Wilsom Results Game 2
+
+ans =
+
+    0.6250    0.2500    0.1250
+
+</pre><pre class="codeinput"><span class="comment">%Game 3</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 75;
+payoffarray(1,1,2)=0;
+payoffarray(1,1,3)=45;
+payoffarray(1,2,1)=80;
+payoffarray(1,2,2)=35;
+payoffarray(1,2,3)=45;
+payoffarray(1,3,1)=100;
+payoffarray(1,3,2)=35;
+payoffarray(1,3,3)=41;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (5/48,16/48,27/48)</span>
+CamererPred{3} = CogHierSol(payoffarray, 1.40, 50);
+SWresults{3} = [5/48,16/48,27/48];
+disp(<span class="string">'CH Solution Game 3'</span>)
+celldisp(CamererPred{3}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 3'</span>)
+SWresults{3}
+</pre><pre class="codeoutput">CH Solution Game 3
+ 
+ans{1} =
+ 
+    0.0822    0.4904    0.4274
+
+ 
+Stahl &amp; Wilsom Results Game 3
+
+ans =
+
+    0.1042    0.3333    0.5625
+
+</pre><pre class="codeinput"><span class="comment">%Game 4</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 30;
+payoffarray(1,1,2)=50;
+payoffarray(1,1,3)=100;
+payoffarray(1,2,1)=40;
+payoffarray(1,2,2)=45;
+payoffarray(1,2,3)=10;
+payoffarray(1,3,1)=35;
+payoffarray(1,3,2)=60;
+payoffarray(1,3,3)=0;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (26/48,15/48,7/48)</span>
+CamererPred{4} = CogHierSol(payoffarray, 2.34, 50);
+SWresults{4} = [26/48,15/48,7/48];
+disp(<span class="string">'CH Solution Game 4'</span>)
+celldisp(CamererPred{4}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 4'</span>)
+SWresults{4}
+</pre><pre class="codeoutput">CH Solution Game 4
+ 
+ans{1} =
+ 
+    0.6097    0.2378    0.1524
+
+ 
+Stahl &amp; Wilsom Results Game 4
+
+ans =
+
+    0.5417    0.3125    0.1458
+
+</pre><pre class="codeinput"><span class="comment">%Game 5</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 10;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=40;
+payoffarray(1,2,1)=0;
+payoffarray(1,2,2)=70;
+payoffarray(1,2,3)=50;
+payoffarray(1,3,1)=20;
+payoffarray(1,3,2)=50;
+payoffarray(1,3,3)=60;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (14/48,3/48,31/48)</span>
+CamererPred{5} = CogHierSol(payoffarray, 2.01, 50);
+SWresults{5} = [14/48,3/48,31/48];
+disp(<span class="string">'CH Solution Game 5'</span>)
+celldisp(CamererPred{5}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 5'</span>)
+SWresults{5}
+</pre><pre class="codeoutput">CH Solution Game 5
+ 
+ans{1} =
+ 
+    0.3140    0.0447    0.6414
+
+ 
+Stahl &amp; Wilsom Results Game 5
+
+ans =
+
+    0.2917    0.0625    0.6458
+
+</pre><pre class="codeinput"><span class="comment">%Game 6</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 25;
+payoffarray(1,1,2)=30;
+payoffarray(1,1,3)=100;
+payoffarray(1,2,1)=60;
+payoffarray(1,2,2)=31;
+payoffarray(1,2,3)=51;
+payoffarray(1,3,1)=95;
+payoffarray(1,3,2)=30;
+payoffarray(1,3,3)=0;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (11/48,20/48,17/48)</span>
+CamererPred{6} = CogHierSol(payoffarray, 0, 50);
+SWresults{6} = [11/48,20/48,17/48];
+disp(<span class="string">'CH Solution Game 6'</span>)
+celldisp(CamererPred{6}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 6'</span>)
+SWresults{6}
+</pre><pre class="codeoutput">CH Solution Game 6
+ 
+ans{1} =
+ 
+    0.3333    0.3333    0.3333
+
+ 
+Stahl &amp; Wilsom Results Game 6
+
+ans =
+
+    0.2292    0.4167    0.3542
+
+</pre><pre class="codeinput"><span class="comment">%Game 7</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 30;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=50;
+payoffarray(1,2,1)=40;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=90;
+payoffarray(1,3,1)=50;
+payoffarray(1,3,2)=75;
+payoffarray(1,3,3)=29;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (21/48,17/48,10/48)</span>
+CamererPred{7} = CogHierSol(payoffarray, 5.37, 50);
+SWresults{7} = [21/48,17/48,10/48];
+disp(<span class="string">'CH Solution Game 7'</span>)
+celldisp(CamererPred{7}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 7'</span>)
+SWresults{7}
+</pre><pre class="codeoutput">CH Solution Game 7
+ 
+ans{1} =
+ 
+    0.5356    0.2406    0.2238
+
+ 
+Stahl &amp; Wilsom Results Game 7
+
+ans =
+
+    0.4375    0.3542    0.2083
+
+</pre><pre class="codeinput"><span class="comment">%Game 8</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 0;
+payoffarray(1,1,2)=60;
+payoffarray(1,1,3)=50;
+payoffarray(1,2,1)=100;
+payoffarray(1,2,2)=20;
+payoffarray(1,2,3)=50;
+payoffarray(1,3,1)=50;
+payoffarray(1,3,2)=40;
+payoffarray(1,3,3)=52;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (12/48,12/48,24/48)</span>
+CamererPred{8} = CogHierSol(payoffarray, 0, 50);
+SWresults{8} = [12/48,12/48,24/48];
+disp(<span class="string">'CH Solution Game 8'</span>)
+celldisp(CamererPred{8}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 8'</span>)
+SWresults{8}
+</pre><pre class="codeoutput">CH Solution Game 8
+ 
+ans{1} =
+ 
+    0.3333    0.3333    0.3333
+
+ 
+Stahl &amp; Wilsom Results Game 8
+
+ans =
+
+    0.2500    0.2500    0.5000
+
+</pre><pre class="codeinput"><span class="comment">%Game 9</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 40;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=65;
+payoffarray(1,2,1)=33;
+payoffarray(1,2,2)=25;
+payoffarray(1,2,3)=65;
+payoffarray(1,3,1)=80;
+payoffarray(1,3,2)=0;
+payoffarray(1,3,3)=65;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (26/48,1/48,21/48)</span>
+CamererPred{9} = CogHierSol(payoffarray, 1.35, 50);
+SWresults{9} = [26/48,1/48,21/48];
+disp(<span class="string">'CH Solution Game 9'</span>)
+celldisp(CamererPred{9}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 9'</span>)
+SWresults{9}
+</pre><pre class="codeoutput">CH Solution Game 9
+ 
+ans{1} =
+ 
+    0.4364    0.0864    0.4772
+
+ 
+Stahl &amp; Wilsom Results Game 9
+
+ans =
+
+    0.5417    0.0208    0.4375
+
+</pre><pre class="codeinput"><span class="comment">%Game 10</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 45;
+payoffarray(1,1,2)=50;
+payoffarray(1,1,3)=21;
+payoffarray(1,2,1)=41;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=40;
+payoffarray(1,3,1)=40;
+payoffarray(1,3,2)=100;
+payoffarray(1,3,3)=0;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (39/48,3/48,6/48)</span>
+CamererPred{10} = CogHierSol(payoffarray, 11.33, 50);
+SWresults{10} = [39/48,3/48,6/48];
+disp(<span class="string">'CH Solution Game 10'</span>)
+celldisp(CamererPred{10}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 10'</span>)
+SWresults{10}
+</pre><pre class="codeoutput">CH Solution Game 10
+ 
+ans{1} =
+ 
+    0.9692    0.0090    0.0217
+
+ 
+Stahl &amp; Wilsom Results Game 10
+
+ans =
+
+    0.8125    0.0625    0.1250
+
+</pre><pre class="codeinput"><span class="comment">%Game 11</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 30;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=22;
+payoffarray(1,2,1)=35;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=45;
+payoffarray(1,3,1)=51;
+payoffarray(1,3,2)=50;
+payoffarray(1,3,3)=20;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (13/48,4/48,31/48)</span>
+CamererPred{11} = CogHierSol(payoffarray, 6.48, 50);
+CamererPred_kmaxb4converge = CogHierSol(payoffarray, 6.48, 6);
+SWresults{11} = [13/48,4/48,31/48];
+disp(<span class="string">'CH Solution Game 11'</span>)
+celldisp(CamererPred{11}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 11'</span>)
+SWresults{11}
+disp(<span class="string">'CH Solution Game 11 with low tau before convergence'</span>);
+CamererPred_kmaxb4converge{1}
+</pre><pre class="codeoutput">CH Solution Game 11
+ 
+ans{1} =
+ 
+    0.4752    0.1883    0.3364
+
+ 
+Stahl &amp; Wilsom Results Game 11
+
+ans =
+
+    0.2708    0.0833    0.6458
+
+CH Solution Game 11 with low tau before convergence
+
+ans =
+
+    0.2692    0.0701    0.6608
+
+</pre><pre class="codeinput"><span class="comment">%Game 12</span>
+clear <span class="string">payoffarray</span>
+payoffarray(1,1,1)= 40;
+payoffarray(1,1,2)=15;
+payoffarray(1,1,3)=70;
+payoffarray(1,2,1)=22;
+payoffarray(1,2,2)=80;
+payoffarray(1,2,3)=0;
+payoffarray(1,3,1)=30;
+payoffarray(1,3,2)=100;
+payoffarray(1,3,3)=52;
+
+<span class="keyword">for</span> i =1:3
+    <span class="keyword">for</span> j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Camerer Regressed Tau Test -- see pg878 of 2004 QJE paper</span>
+<span class="comment">%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)</span>
+<span class="comment">%%%Stahl &amp; Wilson Empirical Row Player (Player 1) Obs: (26/48,3/48,19/48)</span>
+CamererPred{12} = CogHierSol(payoffarray, 1.71, 50);
+SWresults{12} = [26/48,3/48,19/48];
+disp(<span class="string">'CH Solution Game 12'</span>)
+celldisp(CamererPred{12}(1))
+disp(<span class="string">'Stahl &amp; Wilsom Results Game 12'</span>)
+SWresults{12}
+</pre><pre class="codeoutput">CH Solution Game 12
+ 
+ans{1} =
+ 
+    0.5701    0.0603    0.3696
+
+ 
+Stahl &amp; Wilsom Results Game 12
+
+ans =
+
+    0.5417    0.0625    0.3958
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%Stahl and Wilson Games - CH Exp Payoff M-Step Thinker Graphs
+% The following code runs the CH model with the estimates provided by 
+% Camerer (2004) in Table III on all 12 of the Stahl and Wilson games. The
+% emprical results for the Stahl and Wilson games are also provided for
+% comparitive purposes. 
+
+% Action Key: T=1; M=2; B=3
+
+%%Player 1 is Row Player, Player 2 is Column Player
+
+%Game 1
+clear payoffarray 
+payoffarray(1,1,1)=25;
+payoffarray(1,1,2)=30;
+payoffarray(1,1,3)=100;
+payoffarray(1,2,1)= 40;
+payoffarray(1,2,2)=45;
+payoffarray(1,2,3)=65;
+payoffarray(1,3,1)=31;
+payoffarray(1,3,2)=0;
+payoffarray(1,3,3)=40;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (7/48,40/48,1/48)
+CamererPred{1} = CogHierSol(payoffarray, 2.93, 50);
+SWresults{1} = [7/48,40/48,1/48];
+disp('CH Solution Game 1')
+celldisp(CamererPred{1}(1))
+disp('CH Solution Game 2')
+SWresults{1}
+
+%%
+%Game 2
+clear payoffarray 
+payoffarray(1,1,1)= 75;
+payoffarray(1,1,2)=40;
+payoffarray(1,1,3)=45;
+payoffarray(1,2,1)=70;
+payoffarray(1,2,2)=15;
+payoffarray(1,2,3)=100;
+payoffarray(1,3,1)=70;
+payoffarray(1,3,2)=60;
+payoffarray(1,3,3)=0;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (30/48,12/48,6/48)
+CamererPred{2} = CogHierSol(payoffarray, 0, 50);
+SWresults{2} = [30/48,12/48,6/48];
+disp('CH Solution Game 2')
+celldisp(CamererPred{2}(1))
+disp('Stahl & Wilsom Results Game 2')
+SWresults{2}
+
+%%
+%Game 3
+clear payoffarray 
+payoffarray(1,1,1)= 75;
+payoffarray(1,1,2)=0;
+payoffarray(1,1,3)=45;
+payoffarray(1,2,1)=80;
+payoffarray(1,2,2)=35;
+payoffarray(1,2,3)=45;
+payoffarray(1,3,1)=100;
+payoffarray(1,3,2)=35;
+payoffarray(1,3,3)=41;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (5/48,16/48,27/48)
+CamererPred{3} = CogHierSol(payoffarray, 1.40, 50);
+SWresults{3} = [5/48,16/48,27/48];
+disp('CH Solution Game 3')
+celldisp(CamererPred{3}(1))
+disp('Stahl & Wilsom Results Game 3')
+SWresults{3}
+
+%%
+%Game 4
+clear payoffarray 
+payoffarray(1,1,1)= 30;
+payoffarray(1,1,2)=50;
+payoffarray(1,1,3)=100;
+payoffarray(1,2,1)=40;
+payoffarray(1,2,2)=45;
+payoffarray(1,2,3)=10;
+payoffarray(1,3,1)=35;
+payoffarray(1,3,2)=60;
+payoffarray(1,3,3)=0;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (26/48,15/48,7/48)
+CamererPred{4} = CogHierSol(payoffarray, 2.34, 50);
+SWresults{4} = [26/48,15/48,7/48];
+disp('CH Solution Game 4')
+celldisp(CamererPred{4}(1))
+disp('Stahl & Wilsom Results Game 4')
+SWresults{4}
+
+%%
+%Game 5
+clear payoffarray 
+payoffarray(1,1,1)= 10;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=40;
+payoffarray(1,2,1)=0;
+payoffarray(1,2,2)=70;
+payoffarray(1,2,3)=50;
+payoffarray(1,3,1)=20;
+payoffarray(1,3,2)=50;
+payoffarray(1,3,3)=60;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (14/48,3/48,31/48)
+CamererPred{5} = CogHierSol(payoffarray, 2.01, 50);
+SWresults{5} = [14/48,3/48,31/48];
+disp('CH Solution Game 5')
+celldisp(CamererPred{5}(1))
+disp('Stahl & Wilsom Results Game 5')
+SWresults{5}
+
+%%
+%Game 6
+clear payoffarray 
+payoffarray(1,1,1)= 25;
+payoffarray(1,1,2)=30;
+payoffarray(1,1,3)=100;
+payoffarray(1,2,1)=60;
+payoffarray(1,2,2)=31;
+payoffarray(1,2,3)=51;
+payoffarray(1,3,1)=95;
+payoffarray(1,3,2)=30;
+payoffarray(1,3,3)=0;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (11/48,20/48,17/48)
+CamererPred{6} = CogHierSol(payoffarray, 0, 50);
+SWresults{6} = [11/48,20/48,17/48];
+disp('CH Solution Game 6')
+celldisp(CamererPred{6}(1))
+disp('Stahl & Wilsom Results Game 6')
+SWresults{6}
+%%
+%Game 7
+clear payoffarray 
+payoffarray(1,1,1)= 30;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=50;
+payoffarray(1,2,1)=40;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=90;
+payoffarray(1,3,1)=50;
+payoffarray(1,3,2)=75;
+payoffarray(1,3,3)=29;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (21/48,17/48,10/48)
+CamererPred{7} = CogHierSol(payoffarray, 5.37, 50);
+SWresults{7} = [21/48,17/48,10/48];
+disp('CH Solution Game 7')
+celldisp(CamererPred{7}(1))
+disp('Stahl & Wilsom Results Game 7')
+SWresults{7}
+
+%%
+%Game 8
+clear payoffarray 
+payoffarray(1,1,1)= 0;
+payoffarray(1,1,2)=60;
+payoffarray(1,1,3)=50;
+payoffarray(1,2,1)=100;
+payoffarray(1,2,2)=20;
+payoffarray(1,2,3)=50;
+payoffarray(1,3,1)=50;
+payoffarray(1,3,2)=40;
+payoffarray(1,3,3)=52;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (12/48,12/48,24/48)
+CamererPred{8} = CogHierSol(payoffarray, 0, 50);
+SWresults{8} = [12/48,12/48,24/48];
+disp('CH Solution Game 8')
+celldisp(CamererPred{8}(1))
+disp('Stahl & Wilsom Results Game 8')
+SWresults{8}
+
+%%
+%Game 9
+clear payoffarray 
+payoffarray(1,1,1)= 40;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=65;
+payoffarray(1,2,1)=33;
+payoffarray(1,2,2)=25;
+payoffarray(1,2,3)=65;
+payoffarray(1,3,1)=80;
+payoffarray(1,3,2)=0;
+payoffarray(1,3,3)=65;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (26/48,1/48,21/48)
+CamererPred{9} = CogHierSol(payoffarray, 1.35, 50);
+SWresults{9} = [26/48,1/48,21/48];
+disp('CH Solution Game 9')
+celldisp(CamererPred{9}(1))
+disp('Stahl & Wilsom Results Game 9')
+SWresults{9}
+
+%%
+%Game 10
+clear payoffarray 
+payoffarray(1,1,1)= 45;
+payoffarray(1,1,2)=50;
+payoffarray(1,1,3)=21;
+payoffarray(1,2,1)=41;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=40;
+payoffarray(1,3,1)=40;
+payoffarray(1,3,2)=100;
+payoffarray(1,3,3)=0;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (39/48,3/48,6/48)
+CamererPred{10} = CogHierSol(payoffarray, 11.33, 50);
+SWresults{10} = [39/48,3/48,6/48];
+disp('CH Solution Game 10')
+celldisp(CamererPred{10}(1))
+disp('Stahl & Wilsom Results Game 10')
+SWresults{10}
+
+%%
+%Game 11
+clear payoffarray 
+payoffarray(1,1,1)= 30;
+payoffarray(1,1,2)=100;
+payoffarray(1,1,3)=22;
+payoffarray(1,2,1)=35;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=45;
+payoffarray(1,3,1)=51;
+payoffarray(1,3,2)=50;
+payoffarray(1,3,3)=20;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (13/48,4/48,31/48)
+CamererPred{11} = CogHierSol(payoffarray, 6.48, 50);
+CamererPred_kmaxb4converge = CogHierSol(payoffarray, 6.48, 6);
+SWresults{11} = [13/48,4/48,31/48];
+disp('CH Solution Game 11')
+celldisp(CamererPred{11}(1))
+disp('Stahl & Wilsom Results Game 11')
+SWresults{11}
+disp('CH Solution Game 11 with low tau before convergence');
+CamererPred_kmaxb4converge{1}
+
+%%
+%Game 12
+clear payoffarray 
+payoffarray(1,1,1)= 40;
+payoffarray(1,1,2)=15;
+payoffarray(1,1,3)=70;
+payoffarray(1,2,1)=22;
+payoffarray(1,2,2)=80;
+payoffarray(1,2,3)=0;
+payoffarray(1,3,1)=30;
+payoffarray(1,3,2)=100;
+payoffarray(1,3,3)=52;
+
+for i =1:3
+    for j =1:3
+        payoffarray(2,i,j)=payoffarray(1,j,i);
+    end
+end
+
+%Camerer Regressed Tau Test REPLACE_WITH_DASH_DASH see pg878 of 2004 QJE paper
+%%%Compare CamererPred{1} to Stahl and Wilson 1995 GEB paper (pg 227)
+%%%Stahl & Wilson Empirical Row Player (Player 1) Obs: (26/48,3/48,19/48)
+CamererPred{12} = CogHierSol(payoffarray, 1.71, 50);
+SWresults{12} = [26/48,3/48,19/48];
+disp('CH Solution Game 12')
+celldisp(CamererPred{12}(1))
+disp('Stahl & Wilsom Results Game 12')
+SWresults{12}
+##### SOURCE END #####
+--></body></html>

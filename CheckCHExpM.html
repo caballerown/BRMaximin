@@ -1,0 +1,602 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Checking the CogHierExpM Function with Published Results</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-03"><meta name="DC.source" content="CheckCHExpM.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Checking the CogHierExpM Function with Published Results</h1><pre class="codeinput"><span class="comment">%Check D-Day Game</span>
+
+clear <span class="string">payoffarray</span>
+
+payoffarray(1,1,1)=0;
+payoffarray(1,1,2)=1;
+payoffarray(1,1,3)=1;
+payoffarray(1,2,1)=0.75;
+payoffarray(1,2,2)=-0.25;
+payoffarray(1,2,3)=0.75;
+payoffarray(1,3,1)=0.6;
+payoffarray(1,3,2)=0.6;
+payoffarray(1,3,3)=-0.4;
+
+payoffarray(2,1,1)=1;
+payoffarray(2,1,2)=0;
+payoffarray(2,1,3)=0;
+payoffarray(2,2,1)=0;
+payoffarray(2,2,2)=1;
+payoffarray(2,2,3)=0;
+payoffarray(2,3,1)=0;
+payoffarray(2,3,2)=0;
+payoffarray(2,3,3)=1;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+<span class="comment">%Via plot</span>
+<span class="comment">%plot(tau_rng, value{1})</span>
+<span class="comment">%plot(tau_rng,value{2})</span>
+
+<span class="comment">%Or via scatter</span>
+<span class="comment">%Or We can plot as a scatter plot as scatter plot</span>
+hold <span class="string">on</span>
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,<span class="string">'filled'</span>)
+scatter(tau_rng,value{2}(:,2),sz,<span class="string">'filled'</span>)
+scatter(tau_rng,value{2}(:,3),sz,<span class="string">'filled'</span>)
+ylabel(<span class="string">'M-step Thinker Expected Payoff'</span>)
+xlabel(<span class="string">'Mean Level of Thinking (\tau)'</span>)
+title(<span class="string">'D-Day Game: Column Player'</span>)
+lgd1 = legend({<span class="string">'E_M[\pi(s^1_{col}),\tau]'</span>,<span class="string">'E_M[\pi(s^2_{col}),\tau]'</span>,<span class="string">'E_M[\pi(s^3_{col}),\tau]'</span>},<span class="string">'Location'</span>,<span class="string">'northeastoutside'</span>,<span class="string">'Orientation'</span>,<span class="string">'vertical'</span>);
+<span class="comment">%ylabel('M-step Thinker Expected Payoff','fontsize',25)</span>
+<span class="comment">%xlabel('Mean Level of Thinking (\tau)','fontsize',25)</span>
+set(gcf,<span class="string">'color'</span>,<span class="string">'w'</span>);
+<span class="comment">%set(gca, 'FontSize', 24)</span>
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="CheckCHExpM_01.png" alt=""> <pre class="codeinput"><span class="comment">%%Camerer Table VI Check from 2004 CH Paper  -- Costa Gomes Game 8</span>
+
+clear
+
+payoffarray(1,1,1)=45;
+payoffarray(1,1,2)=82;
+payoffarray(1,2,1)=22;
+payoffarray(1,2,2)=57;
+payoffarray(1,3,1)=30;
+payoffarray(1,3,2)=28;
+payoffarray(1,4,1)=15;
+payoffarray(1,4,2)=61;
+
+payoffarray(2,1,1)=66;
+payoffarray(2,1,2)=31;
+payoffarray(2,2,1)=14;
+payoffarray(2,2,2)=55;
+payoffarray(2,3,1)=42;
+payoffarray(2,3,2)=37;
+payoffarray(2,4,1)=60;
+payoffarray(2,4,2)=88;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+<span class="comment">%plot(tau_rng, value{1})</span>
+<span class="comment">%plot(tau_rng,value{2})</span>
+
+<span class="comment">%Or We can plot as a scatter plot as scatter plot</span>
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,<span class="string">'filled'</span>)
+hold <span class="string">on</span>
+scatter(tau_rng,value{2}(:,2),sz,<span class="string">'filled'</span>)
+title(<span class="string">'Camerer Table VI Game - Column Player'</span>)
+ylabel(<span class="string">'M-step Thinker Expected Payoff'</span>)
+xlabel(<span class="string">'Mean Level of Thinking (\tau)'</span>)
+lgd1 = legend({<span class="string">'E_M[\pi(s^1_{col}),\tau]'</span>,<span class="string">'E_M[\pi(s^2_{col}),\tau]'</span>},<span class="string">'Location'</span>,<span class="string">'northeastoutside'</span>,<span class="string">'Orientation'</span>,<span class="string">'vertical'</span>);
+<span class="comment">%ylabel('M-step Thinker Expected Payoff','fontsize',25)</span>
+<span class="comment">%xlabel('Mean Level of Thinking (\tau)','fontsize',25)</span>
+set(gcf,<span class="string">'color'</span>,<span class="string">'w'</span>);
+<span class="comment">%set(gca, 'FontSize', 24)</span>
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="CheckCHExpM_02.png" alt=""> <pre class="codeinput"><span class="comment">%Check Table VII Camerer from 2004 CH Paper</span>
+clear
+
+payoffarray(1,1,1)=0;
+payoffarray(1,1,2)=2;
+payoffarray(1,1,3)=-1;
+payoffarray(1,2,1)=2;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=-1;
+payoffarray(1,3,1)=-1;
+payoffarray(1,3,2)=-1;
+payoffarray(1,3,3)=0;
+
+payoffarray(2,1,1)=0;
+payoffarray(2,1,2)=-2;
+payoffarray(2,1,3)=1;
+payoffarray(2,2,1)=-2;
+payoffarray(2,2,2)=0;
+payoffarray(2,2,3)=1;
+payoffarray(2,3,1)=1;
+payoffarray(2,3,2)=1;
+payoffarray(2,3,3)=0;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+<span class="comment">%plot(tau_rng, value{1})</span>
+<span class="comment">%plot(tau_rng,value{2})</span>
+
+<span class="comment">%Or We can plot as a scatter plot as scatter plot</span>
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,<span class="string">'filled'</span>)
+hold <span class="string">on</span>
+scatter(tau_rng,value{2}(:,2),sz,<span class="string">'filled'</span>)
+scatter(tau_rng,value{2}(:,3),sz,<span class="string">'filled'</span>)
+title(<span class="string">'Camerer Table VII Game - Column Player'</span>)
+ylabel(<span class="string">'M-step Thinker Expected Payoff'</span>)
+xlabel(<span class="string">'Mean Level of Thinking (\tau)'</span>)
+lgd1 = legend({<span class="string">'E_M[\pi(s^1_{col}),\tau]'</span>,<span class="string">'E_M[\pi(s^2_{col}),\tau]'</span>,<span class="string">'E_M[\pi(s^3_{col}),\tau]'</span>},<span class="string">'Location'</span>,<span class="string">'northeastoutside'</span>,<span class="string">'Orientation'</span>,<span class="string">'vertical'</span>);
+<span class="comment">%ylabel('M-step Thinker Expected Payoff','fontsize',25)</span>
+<span class="comment">%xlabel('Mean Level of Thinking (\tau)','fontsize',25)</span>
+set(gcf,<span class="string">'color'</span>,<span class="string">'w'</span>);
+<span class="comment">%set(gca, 'FontSize', 24)</span>
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="CheckCHExpM_03.png" alt=""> <pre class="codeinput"><span class="comment">%Three Player Game Check</span>
+clear
+
+payoffarray(1,1,1,1)=10;
+payoffarray(1,1,2,1)=11;
+payoffarray(1,1,3,1)=11;
+payoffarray(1,2,1,1)=1.75;
+payoffarray(1,2,2,1)=-0.25;
+payoffarray(1,2,3,1)=0.75;
+payoffarray(1,3,1,1)=1.6;
+payoffarray(1,3,2,1)=0.6;
+payoffarray(1,3,3,1)=-0.4;
+payoffarray(1,1,1,2)=0;
+payoffarray(1,1,2,2)=1;
+payoffarray(1,1,3,2)=1;
+payoffarray(1,2,1,2)=0.75;
+payoffarray(1,2,2,2)=-0.25;
+payoffarray(1,2,3,2)=0.75;
+payoffarray(1,3,1,2)=0.6;
+payoffarray(1,3,2,2)=0.6;
+payoffarray(1,3,3,2)=-0.4;
+payoffarray(1,1,1,3)=0;
+payoffarray(1,1,2,3)=1;
+payoffarray(1,1,3,3)=1;
+payoffarray(1,2,1,3)=0.75;
+payoffarray(1,2,2,3)=-0.25;
+payoffarray(1,2,3,3)=0.75;
+payoffarray(1,3,1,3)=0.6;
+payoffarray(1,3,2,3)=1.6;
+payoffarray(1,3,3,3)=-0.4;
+
+payoffarray(2,1,1,1)=1;
+payoffarray(2,1,2,1)=0;
+payoffarray(2,1,3,1)=0;
+payoffarray(2,2,1,1)=5;
+payoffarray(2,2,2,1)=1;
+payoffarray(2,2,3,1)=10;
+payoffarray(2,3,1,1)=0;
+payoffarray(2,3,2,1)=0;
+payoffarray(2,3,3,1)=1;
+payoffarray(2,1,1,2)=1;
+payoffarray(2,1,2,2)=0;
+payoffarray(2,1,3,2)=0;
+payoffarray(2,2,1,2)=0;
+payoffarray(2,2,2,2)=1;
+payoffarray(2,2,3,2)=0;
+payoffarray(2,3,1,2)=0;
+payoffarray(2,3,2,2)=0;
+payoffarray(2,3,3,2)=1;
+payoffarray(2,1,1,3)=2;
+payoffarray(2,1,2,3)=0;
+payoffarray(2,1,3,3)=-1;
+payoffarray(2,2,1,3)=0;
+payoffarray(2,2,2,3)=2;
+payoffarray(2,2,3,3)=0;
+payoffarray(2,3,1,3)=0;
+payoffarray(2,3,2,3)=0;
+payoffarray(2,3,3,3)=2;
+
+payoffarray(3,1,1,1)=1;
+payoffarray(3,1,2,1)=-1;
+payoffarray(3,1,3,1)=0;
+payoffarray(3,2,1,1)=0;
+payoffarray(3,2,2,1)=1;
+payoffarray(3,2,3,1)=0;
+payoffarray(3,3,1,1)=-8;
+payoffarray(3,3,2,1)=0;
+payoffarray(3,3,3,1)=1;
+payoffarray(3,1,1,2)=1;
+payoffarray(3,1,2,2)=7;
+payoffarray(3,1,3,2)=0;
+payoffarray(3,2,1,2)=6;
+payoffarray(3,2,2,2)=1;
+payoffarray(3,2,3,2)=-5;
+payoffarray(3,3,1,2)=0;
+payoffarray(3,3,2,2)=0;
+payoffarray(3,3,3,2)=1;
+payoffarray(3,1,1,3)=1;
+payoffarray(3,1,2,3)=0;
+payoffarray(3,1,3,3)=4;
+payoffarray(3,2,1,3)=0;
+payoffarray(3,2,2,3)=1;
+payoffarray(3,2,3,3)=5;
+payoffarray(3,3,1,3)=0;
+payoffarray(3,3,2,3)=10;
+payoffarray(3,3,3,3)=1;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+
+
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+<span class="comment">%Via plot</span>
+<span class="comment">%plot(tau_rng, value{1})</span>
+<span class="comment">%plot(tau_rng,value{2})</span>
+
+<span class="comment">%Or via scatter</span>
+<span class="comment">%Or We can plot as a scatter plot as scatter plot</span>
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,<span class="string">'filled'</span>)
+hold <span class="string">on</span>
+scatter(tau_rng,value{2}(:,2),sz,<span class="string">'filled'</span>)
+scatter(tau_rng,value{2}(:,3),sz,<span class="string">'filled'</span>)
+title(<span class="string">'A Three Player Game Example - Player 2'</span>)
+ylabel(<span class="string">'M-step Thinker Expected Payoff'</span>)
+xlabel(<span class="string">'Mean Level of Thinking (\tau)'</span>)
+lgd1 = legend({<span class="string">'E_M[\pi(s_{P2}^{1}),\tau]'</span>,<span class="string">'E_M[\pi(s_{P2}^{2}),\tau]'</span>,<span class="string">'E_M[\pi(s_{P2}^{3}),\tau]'</span>},<span class="string">'Location'</span>,<span class="string">'northeastoutside'</span>,<span class="string">'Orientation'</span>,<span class="string">'vertical'</span>);
+<span class="comment">%ylabel('M-step Thinker Expected Payoff','fontsize',25)</span>
+<span class="comment">%xlabel('Mean Level of Thinking (\tau)','fontsize',25)</span>
+set(gcf,<span class="string">'color'</span>,<span class="string">'w'</span>);
+<span class="comment">%set(gca, 'FontSize', 24)</span>
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="CheckCHExpM_04.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Checking the CogHierExpM Function with Published Results
+
+%Check D-Day Game
+ 
+clear payoffarray 
+
+payoffarray(1,1,1)=0;
+payoffarray(1,1,2)=1;
+payoffarray(1,1,3)=1;
+payoffarray(1,2,1)=0.75;
+payoffarray(1,2,2)=-0.25;
+payoffarray(1,2,3)=0.75;
+payoffarray(1,3,1)=0.6;
+payoffarray(1,3,2)=0.6;
+payoffarray(1,3,3)=-0.4;
+
+payoffarray(2,1,1)=1;
+payoffarray(2,1,2)=0;
+payoffarray(2,1,3)=0;
+payoffarray(2,2,1)=0;
+payoffarray(2,2,2)=1;
+payoffarray(2,2,3)=0;
+payoffarray(2,3,1)=0;
+payoffarray(2,3,2)=0;
+payoffarray(2,3,3)=1;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+%Via plot
+%plot(tau_rng, value{1})
+%plot(tau_rng,value{2})
+
+%Or via scatter
+%Or We can plot as a scatter plot as scatter plot
+hold on
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,'filled')
+scatter(tau_rng,value{2}(:,2),sz,'filled')
+scatter(tau_rng,value{2}(:,3),sz,'filled')
+ylabel('M-step Thinker Expected Payoff')
+xlabel('Mean Level of Thinking (\tau)')
+title('D-Day Game: Column Player')
+lgd1 = legend({'E_M[\pi(s^1_{col}),\tau]','E_M[\pi(s^2_{col}),\tau]','E_M[\pi(s^3_{col}),\tau]'},'Location','northeastoutside','Orientation','vertical');
+%ylabel('M-step Thinker Expected Payoff','fontsize',25)
+%xlabel('Mean Level of Thinking (\tau)','fontsize',25)
+set(gcf,'color','w');
+%set(gca, 'FontSize', 24)
+hold off
+
+%% 
+%%Camerer Table VI Check from 2004 CH Paper  REPLACE_WITH_DASH_DASH Costa Gomes Game 8
+
+clear 
+
+payoffarray(1,1,1)=45;
+payoffarray(1,1,2)=82;
+payoffarray(1,2,1)=22;
+payoffarray(1,2,2)=57;
+payoffarray(1,3,1)=30;
+payoffarray(1,3,2)=28;
+payoffarray(1,4,1)=15;
+payoffarray(1,4,2)=61;
+
+payoffarray(2,1,1)=66;
+payoffarray(2,1,2)=31;
+payoffarray(2,2,1)=14;
+payoffarray(2,2,2)=55;
+payoffarray(2,3,1)=42;
+payoffarray(2,3,2)=37;
+payoffarray(2,4,1)=60;
+payoffarray(2,4,2)=88;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+%plot(tau_rng, value{1})
+%plot(tau_rng,value{2})
+
+%Or We can plot as a scatter plot as scatter plot
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,'filled')
+hold on
+scatter(tau_rng,value{2}(:,2),sz,'filled')
+title('Camerer Table VI Game - Column Player')
+ylabel('M-step Thinker Expected Payoff')
+xlabel('Mean Level of Thinking (\tau)')
+lgd1 = legend({'E_M[\pi(s^1_{col}),\tau]','E_M[\pi(s^2_{col}),\tau]'},'Location','northeastoutside','Orientation','vertical');
+%ylabel('M-step Thinker Expected Payoff','fontsize',25)
+%xlabel('Mean Level of Thinking (\tau)','fontsize',25)
+set(gcf,'color','w');
+%set(gca, 'FontSize', 24)
+hold off
+
+%% 
+%Check Table VII Camerer from 2004 CH Paper
+clear 
+
+payoffarray(1,1,1)=0;
+payoffarray(1,1,2)=2;
+payoffarray(1,1,3)=-1;
+payoffarray(1,2,1)=2;
+payoffarray(1,2,2)=0;
+payoffarray(1,2,3)=-1;
+payoffarray(1,3,1)=-1;
+payoffarray(1,3,2)=-1;
+payoffarray(1,3,3)=0;
+
+payoffarray(2,1,1)=0;
+payoffarray(2,1,2)=-2;
+payoffarray(2,1,3)=1;
+payoffarray(2,2,1)=-2;
+payoffarray(2,2,2)=0;
+payoffarray(2,2,3)=1;
+payoffarray(2,3,1)=1;
+payoffarray(2,3,2)=1;
+payoffarray(2,3,3)=0;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+%plot(tau_rng, value{1})
+%plot(tau_rng,value{2})
+
+%Or We can plot as a scatter plot as scatter plot
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,'filled')
+hold on
+scatter(tau_rng,value{2}(:,2),sz,'filled')
+scatter(tau_rng,value{2}(:,3),sz,'filled')
+title('Camerer Table VII Game - Column Player')
+ylabel('M-step Thinker Expected Payoff')
+xlabel('Mean Level of Thinking (\tau)')
+lgd1 = legend({'E_M[\pi(s^1_{col}),\tau]','E_M[\pi(s^2_{col}),\tau]','E_M[\pi(s^3_{col}),\tau]'},'Location','northeastoutside','Orientation','vertical');
+%ylabel('M-step Thinker Expected Payoff','fontsize',25)
+%xlabel('Mean Level of Thinking (\tau)','fontsize',25)
+set(gcf,'color','w');
+%set(gca, 'FontSize', 24)
+hold off
+
+
+%%
+%Three Player Game Check
+clear 
+
+payoffarray(1,1,1,1)=10;
+payoffarray(1,1,2,1)=11;
+payoffarray(1,1,3,1)=11;
+payoffarray(1,2,1,1)=1.75;
+payoffarray(1,2,2,1)=-0.25;
+payoffarray(1,2,3,1)=0.75;
+payoffarray(1,3,1,1)=1.6;
+payoffarray(1,3,2,1)=0.6;
+payoffarray(1,3,3,1)=-0.4;
+payoffarray(1,1,1,2)=0;
+payoffarray(1,1,2,2)=1;
+payoffarray(1,1,3,2)=1;
+payoffarray(1,2,1,2)=0.75;
+payoffarray(1,2,2,2)=-0.25;
+payoffarray(1,2,3,2)=0.75;
+payoffarray(1,3,1,2)=0.6;
+payoffarray(1,3,2,2)=0.6;
+payoffarray(1,3,3,2)=-0.4;
+payoffarray(1,1,1,3)=0;
+payoffarray(1,1,2,3)=1;
+payoffarray(1,1,3,3)=1;
+payoffarray(1,2,1,3)=0.75;
+payoffarray(1,2,2,3)=-0.25;
+payoffarray(1,2,3,3)=0.75;
+payoffarray(1,3,1,3)=0.6;
+payoffarray(1,3,2,3)=1.6;
+payoffarray(1,3,3,3)=-0.4;
+
+payoffarray(2,1,1,1)=1;
+payoffarray(2,1,2,1)=0;
+payoffarray(2,1,3,1)=0;
+payoffarray(2,2,1,1)=5;
+payoffarray(2,2,2,1)=1;
+payoffarray(2,2,3,1)=10;
+payoffarray(2,3,1,1)=0;
+payoffarray(2,3,2,1)=0;
+payoffarray(2,3,3,1)=1;
+payoffarray(2,1,1,2)=1;
+payoffarray(2,1,2,2)=0;
+payoffarray(2,1,3,2)=0;
+payoffarray(2,2,1,2)=0;
+payoffarray(2,2,2,2)=1;
+payoffarray(2,2,3,2)=0;
+payoffarray(2,3,1,2)=0;
+payoffarray(2,3,2,2)=0;
+payoffarray(2,3,3,2)=1;
+payoffarray(2,1,1,3)=2;
+payoffarray(2,1,2,3)=0;
+payoffarray(2,1,3,3)=-1;
+payoffarray(2,2,1,3)=0;
+payoffarray(2,2,2,3)=2;
+payoffarray(2,2,3,3)=0;
+payoffarray(2,3,1,3)=0;
+payoffarray(2,3,2,3)=0;
+payoffarray(2,3,3,3)=2;
+
+payoffarray(3,1,1,1)=1;
+payoffarray(3,1,2,1)=-1;
+payoffarray(3,1,3,1)=0;
+payoffarray(3,2,1,1)=0;
+payoffarray(3,2,2,1)=1;
+payoffarray(3,2,3,1)=0;
+payoffarray(3,3,1,1)=-8;
+payoffarray(3,3,2,1)=0;
+payoffarray(3,3,3,1)=1;
+payoffarray(3,1,1,2)=1;
+payoffarray(3,1,2,2)=7;
+payoffarray(3,1,3,2)=0;
+payoffarray(3,2,1,2)=6;
+payoffarray(3,2,2,2)=1;
+payoffarray(3,2,3,2)=-5;
+payoffarray(3,3,1,2)=0;
+payoffarray(3,3,2,2)=0;
+payoffarray(3,3,3,2)=1;
+payoffarray(3,1,1,3)=1;
+payoffarray(3,1,2,3)=0;
+payoffarray(3,1,3,3)=4;
+payoffarray(3,2,1,3)=0;
+payoffarray(3,2,2,3)=1;
+payoffarray(3,2,3,3)=5;
+payoffarray(3,3,1,3)=0;
+payoffarray(3,3,2,3)=10;
+payoffarray(3,3,3,3)=1;
+
+tau_LB= 0;
+tau_UB = 5;
+tau_inc=0.05;
+max_k=30;
+
+
+[value,tau_rng]=CogHierExpM(payoffarray, tau_LB, tau_UB, tau_inc, max_k);
+
+%Via plot
+%plot(tau_rng, value{1})
+%plot(tau_rng,value{2})
+
+%Or via scatter
+%Or We can plot as a scatter plot as scatter plot
+sz=6;
+scatter(tau_rng,value{2}(:,1),sz,'filled')
+hold on
+scatter(tau_rng,value{2}(:,2),sz,'filled')
+scatter(tau_rng,value{2}(:,3),sz,'filled')
+title('A Three Player Game Example - Player 2')
+ylabel('M-step Thinker Expected Payoff')
+xlabel('Mean Level of Thinking (\tau)')
+lgd1 = legend({'E_M[\pi(s_{P2}^{1}),\tau]','E_M[\pi(s_{P2}^{2}),\tau]','E_M[\pi(s_{P2}^{3}),\tau]'},'Location','northeastoutside','Orientation','vertical');
+%ylabel('M-step Thinker Expected Payoff','fontsize',25)
+%xlabel('Mean Level of Thinking (\tau)','fontsize',25)
+set(gcf,'color','w');
+%set(gca, 'FontSize', 24)
+hold off
+
+
+
+##### SOURCE END #####
+--></body></html>
