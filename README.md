@@ -101,6 +101,13 @@ Matching Pennies” is represented as
 * x = [prob action 1, …., probaction n]
 ### BRmaximin_DR1.m and BRmaximin_DR2.m
 * x = [dual variable 1, …, dual variable 3, prob action 1, …., probaction n]
+
+## Bibtex Citation
+@misc{Caballero2019,
+author ={Caballero, William N. and Lunday, Brian J. and Uber, Richard P.}},
+title = {{Identifying Behaviorally Robust Strategies for Normal-form Games under Varying Forms of Uncertainty}},
+note = {Air Force Institute of Technology: Working Paper} 
+}
 `
 
 
