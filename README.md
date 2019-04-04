@@ -1,10 +1,10 @@
-#BRMaximin 
+# BRMaximin 
 
-##Purpose
+## Purpose
 Identify behaviorally robust solutions to matrix games with varying forms of uncertainty by leveraging the Cognitive Hierarchy (CH) model to describe the behavior of boundedly rational adversaries. Utilizes finite or interval-based uncertainty for the tau-parameter when uncertainty sets, probability distributions, or ambiguity sets are available. The CogHierSol() function outputs the CH model solution for a given game and tau-value, and the CogHierExpM() function provides the expected value for a given action of an M-step thinker across a set of tau values. The BRmaximin_XYZ functions find behaviorally robust strategies (BRS) for the normal form game. That is BRmaximin_R1 and BRmaximin_R2 respecitively identify BRS for finite and interval based uncertainty sets of tau. BRmaximin_S1 and BRmaximin_S2 identify BRS for discrete and beta probability distributions. Whereas, BRmaximin_DR1 and BRmaximin_DR2 find BRS for ambiguity sets over finite and interval-based uncertainty sets.
 
-##Functions
-	###CogHierSol.m 
+## Functions
+	### CogHierSol.m 
 	Identifies the CH solution associated with a given game and the estimated τ value. 
 	Requires inputs payoffarray, tau, max_k
 	Outputs CHsolution
