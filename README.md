@@ -45,7 +45,7 @@ Identify behaviorally robust solutions to matrix games with varying forms of unc
 	CheckCHExpM.m
 	Code illustrating how to use this function and displaying behavior over games in Camerer (2004). 
 
-	Input Variables
+## Input Variables
 	Payoffarray
 	This is the payoff matrix for the normal form game. It should be inputted as follows: 
 
@@ -73,7 +73,7 @@ payoffarray(2,2,2)=0
 	agent: Scalar, number of the player for whom we are optimizing their choice 
 	U_tau: Vector containing all values of τ being considered
 	Dist: Vector, discrete probability distribution over U_tau. Elements correspond to once another (e.g., p(U_tau(1)) = Dist(1) ). Vector values must sum to 1. 
-	Outputs
+## Outputs
 	Each output of x has a slightly different form depending on the underlying needs of the optimization formulation. 
 	BRmaximin_R1.m and BRmaximin_R2.m
 	x = [prob action 1, …., probaction n, maximin value]
