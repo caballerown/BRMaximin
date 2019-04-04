@@ -6,36 +6,36 @@ Identify behaviorally robust solutions to matrix games with varying forms of unc
 ## Functions
 ### CogHierSol.m 
 * Identifies the CH solution associated with a given game and the estimated τ value. 
-* Requires inputs payoffarray, tau, max_k
+* Requires inputs `payoffarray`, `tau`, `max_k`
 * Outputs CHsolution
 
 ### CogHierExpM.m 
 * Identifies the Expected value an M-step thinker assigns with playing each action over all τ values in discrete uncertainty set. 
-* Requires inputs payoffarray, tau_LB, tau_UB, tau_inc, max_k
+* Requires inputs `payoffarray`, `tau_LB`, `tau_UB`, `tau_inc`, `max_k`
 * Outputs value,tau_rng
 ### BRmaximin_R1.m
 * Finds a behaviorally robust solution to a matrix game utilizing a discrete uncertainty set for τ.
-* Requires inputs payoffarray, U_tau, max_k, agent
+* Requires inputs `payoffarray`, `U_tau`, `max_k`, `agent`
 * Outputs x (BR solution)
 ### BRmaximin_S1.m
 * Finds a behaviorally robust solution to a matrix game utilizing a discrete probability distribution over τ.
-* Requires inputs payoffarray, U_tau, Dist, max_k, agent
+* Requires inputs `payoffarray`, `U_tau`, `Dist`, `max_k`, `agent`
 * Outputs x (BR solution)
 ### BRmaximin_DR1.m
 * Finds a behaviorally robust solution to a matrix game utilizing an ambiguity set of discrete probability distributions over τ.
-* Requires inputs payoffarray, U_tau, c1,c2,c3,c4, max_k, agent
+* Requires inputs `payoffarray`, `U_tau`, `c1`,`c2`,`c3`,`c4`, `max_k`, `agent`
 * Outputs x (BR solution)
 ### BRmaximin_R2.m
 * Identifies the Expected value an M-step thinker assigns with playing each action over all τ values in continuous uncertainty set. Discretizes the interval into mesh for numerical calculation. 
-* Requires inputs payoffarray, tau_LB, tau_UB, tau_inc, max_k, agent
+* Requires inputs `payoffarray`, `tau_LB`, `tau_UB`, `tau_inc`, `max_k`, `agent`
 * Outputs x (BR solution)
 ### BRmaximin_S2.m
 * Finds a behaviorally robust solution to a matrix game utilizing some beta  probability distribution over τ. Discretizes the interval into mesh for numerical calculation.
-* Requires inputs payoffarray, tau_LB, tau_UB, tau_inc, beta_a, beta_b, max_k, agent
+* Requires inputs `payoffarray`, `tau_LB`, `tau_UB`, `tau_inc`, `beta_a`, `beta_b`, `max_k`, `agent`
 * Outputs x (BR solution)
 ### BRmaximin_DR2.m
 * Finds a behaviorally robust solution to a matrix game utilizing an ambiguity set of continuous probability distributions over τ. Discretizes the interval into mesh for numerical calculation.
-* Requires inputs payoffarray, tau_LB, tau_UB, tau_inc, c1,c2,c3,c4, max_k, agent
+* Requires inputs payoffarray, `tau_LB`, `tau_UB`, `tau_inc`, `c1`, `c2`, `c3`, `c4`, `max_k`, `agent`
 * Outputs x (BR solution)
 ## Testing Codes
 ### StahlandWilsoCheckCH.m
@@ -48,18 +48,19 @@ Identify behaviorally robust solutions to matrix games with varying forms of unc
 ## Input Variables
 ### Payoffarray
 * This is the payoff matrix for the normal form game. It should be inputted as follows: 
+#### Example
+`payoffarray( # of player receiving payoff, player 1 action, …., play n action)`
 
-payoffarray( # of player receiving payoff, player 1 action, …., play n action)
+Matching Pennies” is represented as 
 
-For example,  “Matching Pennies” is represented as 
-`payoffarray(1,1,1)=1`
-`payoffarray(1,1,2)=0`
-`payoffarray(1,2,1)=0`
-`payoffarray(1,2,2)=1`
-`payoffarray(2,1,1)=0`
-`payoffarray(2,1,2)=1`
-`payoffarray(2,2,1)=1`
-`payoffarray(2,2,2)=0`
+* payoffarray(1,1,1)=1;
+* payoffarray(1,1,2)=0;
+* payoffarray(1,2,1)=0;
+* payoffarray(1,2,2)=1;
+* payoffarray(2,1,1)=0;
+* payoffarray(2,1,2)=1;
+* payoffarray(2,2,1)=1;
+* payoffarray(2,2,2)=0;
 
 ### tau_LB
 * Scalar value representing lower bound of uncertainty set. Often this is 0. 
@@ -86,16 +87,21 @@ For example,  “Matching Pennies” is represented as
 * Discrete probability distribution over U_tau. 
 * Elements correspond to once another (e.g., prob(U_tau(1)) = Dist(1) ). 
 * Vector values must sum to 1. 
+### beta_a
+* The alpha parameter in the beta distribution under consideration
+### beta_b
+* The beta parameter in the beta distribution under considerdation
+
 ## Outputs
 * Each output of x has a slightly different form depending on the underlying needs of the optimization formulation. 
 
 ### BRmaximin_R1.m and BRmaximin_R2.m
-* x = [prob action 1, …., probaction n, maximin value]
+* `x = [prob action 1, …., probaction n, maximin value]`
 ### BRmaximin_S1.m and BRmaximin_S2.m
-* x = [prob action 1, …., probaction n]
+* `x = [prob action 1, …., probaction n]`
 ### BRmaximin_DR1.m and BRmaximin_DR2.m
-* x = [dual variable 1, …, dual variable 3, prob action 1, …., probaction n]
-
+* `x = [dual variable 1, …, dual variable 3, prob action 1, …., probaction n]`
+`
 
 
 
