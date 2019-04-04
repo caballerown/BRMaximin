@@ -53,14 +53,16 @@ Identify behaviorally robust solutions to matrix games with varying forms of unc
 
 Matching Pennies” is represented as 
 
-* payoffarray(1,1,1)=1;
-* payoffarray(1,1,2)=0;
-* payoffarray(1,2,1)=0;
-* payoffarray(1,2,2)=1;
-* payoffarray(2,1,1)=0;
-* payoffarray(2,1,2)=1;
-* payoffarray(2,2,1)=1;
-* payoffarray(2,2,2)=0;
+```
+payoffarray(1,1,1)=1;
+payoffarray(1,1,2)=0;
+payoffarray(1,2,1)=0;
+payoffarray(1,2,2)=1;
+payoffarray(2,1,1)=0;
+payoffarray(2,1,2)=1;
+payoffarray(2,2,1)=1;
+payoffarray(2,2,2)=0;
+```
 
 ### tau_LB
 * Scalar value representing lower bound of uncertainty set. Often this is 0. 
