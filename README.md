@@ -44,6 +44,12 @@ Identify behaviorally robust solutions to matrix games with varying forms of unc
 * Code to check CogHierSol with tables provided in Camerer (2004).
 ### CheckCHExpM.m
 * Code illustrating how to use this function and displaying behavior over games in Camerer (2004). 
+### StahandWilsonGames_BehavRobust.m
+* Code implementing Stahl and Wilson applications in Caballero (2020)
+### Chicken_BehavRobust.m
+* Code implementing Chicken application in Caballero (2020)
+### PD_BehavRobust.m
+* Code implementing Prisoner's Dilemma application in Caballero (2020)
 
 ## Input Variables
 ### Payoffarray
@@ -110,7 +116,7 @@ payoffarray(2,2,2)=0;
 author ={Caballero, William N. and Lunday, Brian J. and Uber, Richard P.}},
 title = {{Identifying Behaviorally Robust Strategies for Normal-form Games under Varying Forms of Uncertainty}},
 note = {Air Force Institute of Technology: Working Paper},
-year = {2019}
+year = {2020}
 }
 ```
 
