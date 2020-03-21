@@ -83,7 +83,7 @@ payoffarray(2,2,2)=0;
 ### c3
 * Lower bound of density requirement (c3>=0) 
 ### c4
-* Upper bound of density requirement, Scalar b/w 0 and 1 (c4>c3)
+* Upper bound of density requirement (c4>c3)
 ### max_k
 * Scalar representing the max k-level thinking used in the algorithm
 * This is also utilized as the big M value 
