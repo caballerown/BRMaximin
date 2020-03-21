@@ -104,7 +104,7 @@ payoffarray(2,2,2)=0;
 * Each output of x has a slightly different form depending on the underlying needs of the optimization formulation. 
 
 ### BRmaximin_R1.m and BRmaximin_R2.m
-* x = [prob action 1, …., probaction n, maximin value]
+* x = [prob action 1, …., probaction n, BR payoff value]
 ### BRmaximin_S1.m and BRmaximin_S2.m
 * x = [prob action 1, …., probaction n]
 ### BRmaximin_DR1.m and BRmaximin_DR2.m
