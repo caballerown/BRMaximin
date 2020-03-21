@@ -93,7 +93,7 @@ payoffarray(2,2,2)=0;
 * Vector containing all values of τ being considered
 ### Dist: Vector
 * Discrete probability distribution over U_tau. 
-* Elements correspond to once another (e.g., prob(U_tau(1)) = Dist(1) ). 
+* Elements correspond to one another (e.g., prob(U_tau(1)) = Dist(1) ). 
 * Vector values must sum to 1. 
 ### beta_a
 * The alpha parameter in the beta distribution under consideration
