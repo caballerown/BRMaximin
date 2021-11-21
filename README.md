@@ -112,11 +112,15 @@ payoffarray(2,2,2)=0;
 
 ## Bibtex Citation
 ```
-@misc{Caballero2019, 
-author ={Caballero, William N. and Lunday, Brian J. and Uber, Richard P.}},
-title = {{Identifying Behaviorally Robust Strategies for Normal-form Games under Varying Forms of Uncertainty}},
-note = {Air Force Institute of Technology: Working Paper},
-year = {2020}
+@article{caballero2021identifying,
+  title={Identifying behaviorally robust strategies for normal form games under varying forms of uncertainty},
+  author={Caballero, William N and Lunday, Brian J and Uber, Richard P},
+  journal={European Journal of Operational Research},
+  volume={288},
+  number={3},
+  pages={971--982},
+  year={2021},
+  publisher={Elsevier}
 }
 ```
 
